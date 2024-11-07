@@ -2,7 +2,7 @@
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
-
+import { SERVER_URL } from "./constant";
 
 
 const Test = () => {
@@ -32,16 +32,14 @@ const Test = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3001/register',{
+        axios.post(`${SERVER_URL}/register`,{
             name,
             employeeid,
             department,
             salary
         })
         .then((response)=>{
-            console.log(response)
-        })
-        .catch((error)=>{
+            co
             console.log(error)
         })
         closePopUp();
