@@ -8,7 +8,9 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-mongoose.connect('mongodb://localhost:27017/test')
+
+
+mongoose.connect(process.env.MONGODB_URI)
 
 app.post('/register',(req, res)=>{
     EmployeeModel.create(req.body)
@@ -16,6 +18,8 @@ app.post('/register',(req, res)=>{
     .catch(err => res.json(err))
 })
 
-app.listen(3001,() =>{
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT,() =>{
     console.log("Server is running")
 })
