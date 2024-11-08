@@ -38,12 +38,11 @@ const Test = () => {
             department,
             salary
         })
-        .then((response)=>{
-            co
-            console.log(error)
-        })
+        .then(response=>console.log(response))
+        .catch(err => console.log(err))
+            
         closePopUp();
-    };
+    };  
         return (<>
             <div className='flex justify-center h-screen items-center'>
                 <button className='border-2  w-24 border-black'
