@@ -7,6 +7,6 @@ const EmployeeSchema = new mongoose.Schema({
     salary : Number
 })
 
-const EmployeeModel = mongoose.model("employees", EmployeeSchema)
+const EmployeeModel = mongoose.model("EmployeeModel", EmployeeSchema)
 // module.exports = EmployeeModel;
 export default EmployeeModel;

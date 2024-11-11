@@ -1,8 +1,9 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import { SERVER_URL } from "./constant";
+
 
 
 const Test = () => {
@@ -11,7 +12,9 @@ const Test = () => {
     const [ employeeid, setEmployeeid] = useState()
     const [ department, setDepartment] = useState()
     const [ salary, setSalary] = useState()
-
+    const [employee, setEmployee] = useState([])
+    
+    
     const [userObj, setUserObj] = useState({
         name: "",
         employeeid: "",
@@ -29,7 +32,23 @@ const Test = () => {
       }
 
 
+      // Fetch employee data on component mount
+    useEffect(() => {
+        fetchEmployees();
+    }, []);
 
+    // Function to fetch employees from the server
+    const fetchEmployees = async () => {
+        try {
+            const response = await axios.get(`${SERVER_URL}/employees`);
+            setEmployee(response.data);
+            console.log("Fetched Employees:", response.data); // Log the fetched data
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         axios.post(`${SERVER_URL}/register`,{
@@ -40,12 +59,11 @@ const Test = () => {
         })
         .then(response=>console.log(response))
         .catch(err => console.log(err))
-            
         closePopUp();
     };  
         return (<>
             <div className='flex justify-center h-screen items-center'>
-                <button className='border-2  w-24 border-black'
+                <button className='border-2 w-24 border-black'
                 onClick={()=> setFilterPopupVisible(true)}
                 
                 >Add user</button>    
