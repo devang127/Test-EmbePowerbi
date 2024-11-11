@@ -3,7 +3,7 @@ import express from "express"
 import mongoose from "mongoose"
 import cors from "cors"
 import EmployeeModel from "./models/employee.js"
-require('dotenv').config();
+
 
 const app = express()
 app.use(express.json())
