@@ -1,9 +1,8 @@
-
-import EmployeeModel from '../models/employeeModel.js'
+import employee from '../models/EmployeeModel.js'
 
 const getAllEmployee = async (req, res) => {
     try {
-        const employees = await EmployeeModel.find()
+        const employees = await employee.find()
         res.status(200).json(employees)
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -13,7 +12,7 @@ const getAllEmployee = async (req, res) => {
 const createNewEmployee = async (req, res) => {
     const employee = new employee(req.body)
     try {
-        const newEmployee = await employee.save();
+        const newEmployee = await user.save();
         res.status(201).json({ message: "Data is posted to MongoDB!", newEmployee });
       } catch (err) {
         res.status(400).json({ message: err.message });
