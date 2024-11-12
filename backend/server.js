@@ -12,7 +12,12 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(morgan("dev"));
 
+
 const PORT = process.env.PORT || 8000;
+
+app.listen(PORT,() =>{
+    console.log(`Server is running on ${PORT}`);
+})
 
 app.get("/", (req, res) => {
     res.send("API is running....");
@@ -20,13 +25,12 @@ app.get("/", (req, res) => {
 
 // connectDb()
 //     .then(async()=>
-//         app.listen(PORT,() =>{
-//             console.log(`Server is running on ${PORT}`);
-//         })
 //     )
 //     .catch((error) =>{
 //         console.log("Mongo DB connection Failed", error);
 //     });
+
+
 
 import { MongoClient, ServerApiVersion } from "mongodb";
 const uri = "mongodb+srv://devangsawant127:chamber9930@cluster0.tvpzs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
