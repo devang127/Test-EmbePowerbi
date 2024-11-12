@@ -1,34 +1,63 @@
 
 import express from "express"
-import cors from "cors"
-import connectDb from "./db/index.js"
 import "dotenv/config";
+// import connectDb from "./src/db/index.js";
+import cors from "cors";
 import morgan from "morgan";
-import employeeRouter from "./router/employeeRouter.js"
+import EmployeeRouter from "./src/router/employeeRouter.js"
 
-const app = express()
-app.use(express.json())
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 app.use(morgan("dev"));
-app.use(cors())
-app.use(express.urlencoded({ extended: true }));
 
 const PORT = process.env.PORT || 8000;
 
 app.get("/", (req, res) => {
-    res.send("Hello World");
+    res.send("API is running....");
+}); 
+
+// connectDb()
+//     .then(async()=>
+//         app.listen(PORT,() =>{
+//             console.log(`Server is running on ${PORT}`);
+//         })
+//     )
+//     .catch((error) =>{
+//         console.log("Mongo DB connection Failed", error);
+//     });
+
+import { MongoClient, ServerApiVersion } from "mongodb";
+const uri = "mongodb+srv://devangsawant127:chamber9930@cluster0.tvpzs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
 });
 
-connectDb()
-.then(async () =>
-    app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}`);
-    })
-)
-.catch((error) => {
-    console.log("MONGO DB connection FAILED", error);
-});
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
 
-app.use("/api/employees", employeeRouter);
+
+app.use("/api/employees", EmployeeRouter)
+
+
 
 
 

@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
-import { SERVER_URL } from "./constant";
+import { BASE_URL } from "../BASE_URL";
 
 
 
@@ -30,35 +30,27 @@ const Test = () => {
             salary: "",
         });
       }
+    
+      useEffect(() =>{
+        axios.get(`${BASE_URL}/employee`)
+        .then((response) =>{
+            setEmployee(response.data)
+        })
+        .catch((error) => console.error("Error fetching data:", error))
+      },[])
 
-
-      // Fetch employee data on component mount
-    useEffect(() => {
-        fetchEmployees();
-    }, []);
-
-    // Function to fetch employees from the server
-    const fetchEmployees = async () => {
-        try {
-            const response = await axios.get(`${SERVER_URL}/employees`);
-            setEmployee(response.data);
-            console.log("Fetched Employees:", response.data); // Log the fetched data
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
 
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-        axios.post(`${SERVER_URL}/register`,{
+        axios.post(`${BASE_URL}/register`,{
             name,
             employeeid,
             department,
             salary
         })
         .then(response=>console.log(response))
-        .catch(err => console.log(err))
+        .catch(error => console.error("Error fetching data POST:", error))
         closePopUp();
     };  
 
