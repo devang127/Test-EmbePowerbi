@@ -32,7 +32,7 @@ const Test = () => {
       }
     
       useEffect(() =>{
-        axios.get(`${BASE_URL}/employee`)
+        axios.get(`${BASE_URL}/employees`)
         .then((response) =>{
             setEmployee(response.data)
         })
@@ -43,7 +43,7 @@ const Test = () => {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-        axios.post(`${BASE_URL}/register`,{
+        axios.post(`${BASE_URL}/employee`,{
             name,
             employeeid,
             department,
