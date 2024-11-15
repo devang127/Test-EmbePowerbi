@@ -8,7 +8,7 @@ const employeeMasterSchema = new mongoose.Schema({
 })
 
 const EmployeMaster = mongoose.model(
-    'EmployeeMaster',
+    'Employee',
     employeeMasterSchema
 )
 

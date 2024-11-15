@@ -31,37 +31,67 @@ const Test = () => {
         });
       }
     
-      useEffect(() =>{
-        axios.get(`${BASE_URL}/employees`)
+      const getEmployeeData = ()=>{
+        axios.get(`${BASE_URL}/employee`)
         .then((response) =>{
             setEmployee(response.data)
         })
         .catch((error) => console.error("Error fetching data:", error))
+      }
+
+      useEffect(() =>{
+        getEmployeeData();
       },[])
-
-
-    
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        axios.post(`${BASE_URL}/employee`,{
-            name,
-            employeeid,
-            department,
-            salary
-        })
-        .then(response=>console.log(response))
-        .catch(error => console.error("Error fetching data POST:", error))
-        closePopUp();
-    };  
+      
+      const handleSubmit = (e) => {
+          e.preventDefault();
+          axios.post(`${BASE_URL}/employee`,{
+              name,
+              employeeid,
+              department,
+              salary
+            })
+            .then(response=>{
+                getEmployeeData();
+            })
+            .catch(error => console.error("Error fetching data POST:", error))
+            closePopUp();
+        };  
 
     
         return (<>
-            <div className='flex justify-center h-screen items-center'>
-                <button className='border-2 w-24 border-black'
-                onClick={()=> setFilterPopupVisible(true)}
+            <div className="h-screen">
+                <div className='flex justify-center items-center'>
+                    <button className='border-2 w-24 border-black mt-14'
+                    onClick={()=> setFilterPopupVisible(true)}
+                    >Add user</button>    
+                </div>
+                <div className="flex justify-center mt-14">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th className="px-4 py-2">Name</th>
+                                <th className="px-4 py-2">Employee ID</th>
+                                <th className="px-4 py-2">Department</th>
+                                <th className="px-4 py-2">Salary</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                employee.map((employee) => (
+                                    <tr key={employee._id}>
+                                        <td className="border px-4 py-2">{employee.name}</td>
+                                        <td className="border px-4 py-2">{employee.employeeid}</td>
+                                        <td className="border px-4 py-2">{employee.department}</td>
+                                        <td className="border px-4 py-2">{employee.salary}</td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </div>
                 
-                >Add user</button>    
-            </div>
+             </div>
             {filterPopupVisible && (
                 <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
                     <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-xl  m-3">
@@ -118,6 +148,7 @@ const Test = () => {
                         </div>
                         <div className="flex justify-center">
                             <button className="bg-blue-500 rounded-lg w-24 h-12"
+                            type="submit" 
                             // onClick={}
                             >Add User</button>
                         </div>
