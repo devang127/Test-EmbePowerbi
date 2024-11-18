@@ -66,7 +66,7 @@ const Test = () => {
                     onClick={()=> setFilterPopupVisible(true)}
                     >Add user</button>    
                 </div>
-                <div className="flex justify-center mt-14">
+                {/* <div className="flex justify-center mt-14">
                     <table>
                         <thead>
                             <tr>
@@ -89,6 +89,15 @@ const Test = () => {
                             }
                         </tbody>
                     </table>
+                </div> */}
+                <div className="w-full h-screen flex justify-center items-center">
+                    <iframe title="power-react-embed" 
+                        // width="600" height="373.5" 
+                        className="w-full h-screen"
+                        src="https://app.powerbi.com/view?r=eyJrIjoiNDkyNmQ0ZWMtOWMzMS00ODZiLWI5MGYtMmNiMDU2ZWY3OTVkIiwidCI6ImRiOTNmNTcwLTJiZTEtNDA4My05OWJhLTA4M2E0MWQyY2I0MSJ9" 
+                        frameborder="0" 
+                        allowFullScreen="true">
+                    </iframe>
                 </div>
                 
              </div>
